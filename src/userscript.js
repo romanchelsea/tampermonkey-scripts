@@ -36,9 +36,9 @@
 
     // Link Conversion Functions
     const linkConverter = {
-        // Convert leetcode.cn URL to leetcode.com
+        // Convert leetcode.cn URL to leetcode.com for problem links
         convertUrl: (url) => {
-            if (url.includes('leetcode.cn')) {
+            if (url.includes('leetcode.cn/problems/')) {
                 return url.replace(/leetcode\.cn/g, 'leetcode.com');
             }
             return url;
@@ -60,8 +60,8 @@
                 links.forEach((link) => {
                     const originalHref = link.href;
                     
-                    // Check if the link contains leetcode.cn
-                    if (originalHref && originalHref.includes('leetcode.cn')) {
+                    // Check if the link contains leetcode.cn/problems/
+                    if (originalHref && originalHref.includes('leetcode.cn/problems/')) {
                         const newHref = linkConverter.convertUrl(originalHref);
                         link.href = newHref;
                         
