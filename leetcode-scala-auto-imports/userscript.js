@@ -7,6 +7,8 @@
 // @match        https://leetcode.com/problems/*
 // @grant        none
 // @run-at       document-end
+// @updateURL    https://raw.githubusercontent.com/RomanWang0x3F/leetcode-scala-auto-imports/main/userscript.js
+// @downloadURL  https://raw.githubusercontent.com/RomanWang0x3F/leetcode-scala-auto-imports/main/userscript.js
 // ==/UserScript==
 
 (function () {
