@@ -4,16 +4,17 @@
 // @version      1.0
 // @description  Automatically add Scala imports to LeetCode code editor
 // @author       Roman Wang
-// @match        https://leetcode.com/*
-// @match        https://*.leetcode.com/*
+// @match        https://leetcode.com/problems/*
 // @grant        none
+// @run-at       document-end
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     const IMPORTS = `import scala.collection.mutable._
 import scala.math._
+
 `;
 
     // Function to find the code editor
@@ -38,8 +39,8 @@ import scala.math._
 
         // Fallback: try to find any textarea in the editor area
         const editorContainer = document.querySelector('[data-testid="code-editor"]') ||
-                               document.querySelector('.monaco-editor') ||
-                               document.querySelector('.editor');
+            document.querySelector('.monaco-editor') ||
+            document.querySelector('.editor');
 
         if (editorContainer) {
             const textarea = editorContainer.querySelector('textarea');
@@ -55,7 +56,7 @@ import scala.math._
         const langSelectors = [
             '[data-cy="lang-select"]',
             '.lang-select',
-            'button[aria-label*="Scala"]',
+            'button[aria-label*="Scala"]', // this works becuase we have a debug button with aria-label="Scala"
             'button[aria-label*="Language"]',
             '.dropdown-toggle[data-toggle="dropdown"]'
         ];
@@ -63,6 +64,7 @@ import scala.math._
         for (const selector of langSelectors) {
             const elem = document.querySelector(selector);
             if (elem && (elem.textContent.includes('Scala') || elem.getAttribute('aria-label')?.includes('Scala'))) {
+                // console.log('Scala language detected with selector:', selector);
                 return true;
             }
         }
@@ -188,7 +190,7 @@ import scala.math._
     // Helper to find React Fiber node
     function findReactFiber() {
         const editorContainer = document.querySelector('.monaco-editor') ||
-                               document.querySelector('[data-testid="code-editor"]');
+            document.querySelector('[data-testid="code-editor"]');
         if (!editorContainer) return null;
 
         for (let key in editorContainer) {
@@ -260,7 +262,7 @@ import scala.math._
         injectImports();
 
         // Use MutationObserver to watch for DOM changes
-        const observer = new MutationObserver(function(mutations) {
+        const observer = new MutationObserver(function (mutations) {
             // Debounce: only run after a short delay
             clearTimeout(window.leetcodeScalaImportTimeout);
             window.leetcodeScalaImportTimeout = setTimeout(() => {
@@ -277,7 +279,7 @@ import scala.math._
         });
 
         // Also listen for language change events
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             // If clicking on language selector, wait a bit then inject
             if (e.target.closest('[data-cy="lang-select"]') ||
                 e.target.closest('.lang-select') ||
@@ -306,4 +308,3 @@ import scala.math._
     setTimeout(setupObserver, 5000);
 
 })();
-
